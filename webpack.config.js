@@ -1,12 +1,14 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const loader = require("sass-loader");
+
 const isProd = process.env.NODE_ENV === "production";
 const isDev = !isProd;
+
 const filename = (ext) => (isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`);
+
 const jsLoaders = () => {
   const loaders = [
     {
@@ -16,9 +18,11 @@ const jsLoaders = () => {
       },
     },
   ];
+
   if (isDev) {
     loaders.push("eslint-loader");
   }
+
   return loaders;
 };
 
@@ -39,12 +43,13 @@ module.exports = {
   },
   devtool: isDev ? "source-map" : false,
   devServer: {
+    index: "index.html",
     port: 3000,
-    hot: isDev,
+    // hot: isDev,
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
+    new HTMLWebpackPlugin({
       template: "index.html",
       minify: {
         removeComments: isProd,
@@ -81,7 +86,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.m?js$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: jsLoaders(),
       },
