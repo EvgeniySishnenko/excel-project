@@ -16,7 +16,8 @@
     "indent": "off",
     "space-before-blocks":"off",
     "keyword-spacing": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "no-unused-vars": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }
