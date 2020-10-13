@@ -9,7 +9,15 @@
     "quotes": "off",
     "linebreak-style": "off",
     "object-curly-spacing": "off",
-    "require-jsdoc": "off"
+    "require-jsdoc": "off",
+    "operator-linebreak": "off",
+    "no-debugger": "off",
+    "arrow-parens":"off",
+    "indent": "off",
+    "space-before-blocks":"off",
+    "keyword-spacing": "off",
+    "max-len": "off",
+    "no-unused-vars": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }
