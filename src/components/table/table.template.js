@@ -2,11 +2,11 @@ const CODES = {
     A: 65,
     Z: 90,
 };
-function toCell(){
-    return `<div class="cell" contenteditable></div>`;
+function toCell(_, coll){
+    return `<div class="cell" data-coll="${coll}" contenteditable></div>`;
 }
-function toColumn(col){
-    return `<div class="column js-drop-zone">
+function toColumn(col, index){
+    return `<div class="column" data-type="resizable" data-coll="${index}">
     ${col}
     <div data-resize="col" class="col-resize" ></div>
     </div>`;
@@ -14,8 +14,8 @@ function toColumn(col){
 function createRow(index, content){
     const resize = index ? '<div data-resize="row" class="row-resize"></div>' : '';
     return `
-    <div class="row">
-    <div class="row-info js-drop-zone">
+    <div class="row" data-type="resizable">
+    <div class="row-info" >
     ${index ? index : ''}
     ${resize}
     </div>

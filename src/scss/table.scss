@@ -34,7 +34,7 @@
     justify-content: center;
     align-items: center;
     background-color: #f8f9fa;
-    // min-width: 40px;
+    min-width: 40px;
     width: $cell-width;
     height: 100%;
     border: 1px solid $border-color;
@@ -65,8 +65,9 @@
     right: 0;
     background-color: $primary-color;
     opacity: 0;
+    z-index: 1000;
     &:hover {
-      opacity: 1;
+      opacity: 1 !important;
     }
   }
   .col-resize {
