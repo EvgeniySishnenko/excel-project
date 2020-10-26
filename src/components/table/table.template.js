@@ -2,8 +2,18 @@ const CODES = {
     A: 65,
     Z: 90,
 };
-function toCell(_, coll){
-    return `<div class="cell" data-coll="${coll}" contenteditable></div>`;
+// function toCell(row, coll){
+//     return `<div class="cell" data-coll="${coll}" data-row="${row}" contenteditable></div>`;
+// }
+function toCell(row){
+    return function(_, col) {
+        return `<div 
+            class="cell" 
+            data-coll="${col}" 
+            data-id="${row}:${col}" 
+            contenteditable>
+        </div>`;
+    };
 }
 function toColumn(col, index){
     return `<div class="column" data-type="resizable" data-coll="${index}">
@@ -35,9 +45,12 @@ export function createTable(rowsCount = 15){
         .map(toColumn)
         .join('');
     rows.push(createRow(null, cols));
-    const cells = new Array(colsCount).fill('').map(toCell).join('');
-    for(let i = 0; i < rowsCount; i++){
-        rows.push(createRow(i+1, cells));
+    for(let row = 0; row < rowsCount; row++){
+        const cells = new Array(colsCount).fill('')
+        // .map((_, col)=>toCell(row, col))
+        .map(toCell(row))
+        .join('');
+        rows.push(createRow(row+1, cells));
     }
     return rows.join('');
 }
