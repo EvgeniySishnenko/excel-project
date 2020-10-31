@@ -11,6 +11,7 @@ function toCell(row){
             class="cell" 
             data-coll="${col}" 
             data-id="${row}:${col}" 
+            data-type="cell"
             contenteditable>
         </div>`;
     };
