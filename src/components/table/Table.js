@@ -7,9 +7,10 @@ import {$} from '@core/dom';
 
 export class Table extends ExcelComponent {
   static className = "excel__table";
-  constructor($root){
+  constructor($root, options){
     super($root, {
-      listeners: ['mousedown', 'dragstart', 'keydown'],
+      listeners: ['mousedown', 'dragstart', 'keydown', 'input'],
+      ...options,
     });
   }
 
@@ -21,8 +22,17 @@ export class Table extends ExcelComponent {
   }
   init(){
     super.init();
-    const $cell = this.$root.find('[data-id="0:0"]');
+    this.selectCell(this.$root.find('[data-id="0:0"]'));
+    this.$on('formula:input', text => {
+      this.selection.current.text(text);
+    });
+    this.$on("formula:done", ()=>{
+      this.selection.current.focus();
+    });
+  }
+  selectCell($cell){
     this.selection.selected($cell);
+    this.$emit('table:select', $cell);
   }
   onMousedown(){
     if(shootResize(event)){
@@ -44,8 +54,16 @@ export class Table extends ExcelComponent {
     event.preventDefault();
     const id = this.selection.current.id(true);
     const $next = this.$root.find(nextSelection(key, id));
-    this.selection.selected($next);
+    this.selectCell($next);
   }
+  // if(event.shiftKey && event.key === 'Enter') {
+  //   event.preventDefault();
+  //   const focus = this.selection.current.focus();
+  //   this.$emit('table:focus', focus);
+  // }
+  }
+  onInput(event){
+    this.$emit('table:input', $(event.target));
   }
   onDragstart(){
    event.preventDefault();
